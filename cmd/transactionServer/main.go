@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"log/slog"
 	"os"
 
 	"github.com/lewis97/TechnicalTask/internal/adapters/server"
@@ -17,7 +18,14 @@ func main() {
 	config := LoadConfigFromFile(configPath)
 	log.Println(config.REST.Address)
 
+	// Set logger
+	logger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
+
 	// Setup & start REST server
-	server := server.New(server.Dependencies{})
+	deps := server.Dependencies{
+		Logger: *logger,
+	}
+	server := server.New(deps)
 	server.Start(config.REST.Address, config.REST.Port)
+	// TODO: ^ goroutine w/ context?
 }
