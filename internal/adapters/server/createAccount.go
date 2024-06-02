@@ -25,13 +25,13 @@ func (s *Server) CreateAccount(ctx context.Context, req *CreateAccountRequest) (
 		DocumentNumber: uint(req.Body.DocumentNumber),
 	}
 	repo := &accounts.AccountUsecaseRepos{
-		Logger: s.logger,
+		Logger:            s.logger,
 		AccountsDatastore: s.datastore,
 	}
 
 	// Call usecase to create account
 	newAccount, err := s.usecases.CreateAccount(ctx, input, repo)
-	
+
 	if err != nil {
 		return &CreateAccountResponse{}, DomainToRESTError(err)
 	}

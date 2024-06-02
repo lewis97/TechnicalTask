@@ -28,7 +28,6 @@ func main() {
 	// Set logger
 	logger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
 
-
 	// Connect to database
 	db := postgres.NewDBConnection(config.Database)
 	defer db.Close()
@@ -49,7 +48,7 @@ func main() {
 		Logger:    *logger,
 		Datastore: ds,
 		Usecases: &usecases.Facade{
-			AccountsUsecase: accounts.NewAccountsUsecase(uuidGenerator),
+			AccountsUsecase:     accounts.NewAccountsUsecase(uuidGenerator),
 			TransactionsUsecase: transactions.NewAccountsUsecase(uuidGenerator),
 		},
 	}

@@ -1,18 +1,18 @@
 package datastore
 
 import (
-	"log/slog"
 	"github.com/jmoiron/sqlx"
+	"log/slog"
 )
 
 type Datastore struct {
-	db *sqlx.DB
+	db     *sqlx.DB
 	logger slog.Logger
 }
 
 func NewDatastore(db *sqlx.DB, logger slog.Logger) *Datastore {
 	return &Datastore{
-		db: db,
+		db:     db,
 		logger: logger,
 	}
 }

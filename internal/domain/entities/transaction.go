@@ -30,7 +30,7 @@ func ValidateOperationType(ot int) bool {
 }
 
 func (ot OperationType) String() string {
-	switch ot{
+	switch ot {
 	case UnknownType:
 		return "INVALID"
 	case CashPurchase:
@@ -45,4 +45,3 @@ func (ot OperationType) String() string {
 		return "INVALID"
 	}
 }
-

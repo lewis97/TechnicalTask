@@ -32,13 +32,13 @@ func (s *Server) CreateTransaction(ctx context.Context, req *CreateTransactionRe
 
 	// Setup usecase inputs
 	input := &transactions.CreateTransactionInput{
-		AccountID: accountUUID,
+		AccountID:   accountUUID,
 		OperationID: req.Body.OperationType,
-		Amount: req.Body.Amount,
+		Amount:      req.Body.Amount,
 	}
 	repo := &transactions.TransactionsUsecaseRepos{
-		Logger: s.logger,
-		AccountsDatastore: s.datastore,
+		Logger:                s.logger,
+		AccountsDatastore:     s.datastore,
 		TransactionsDatastore: s.datastore,
 	}
 
@@ -49,7 +49,6 @@ func (s *Server) CreateTransaction(ctx context.Context, req *CreateTransactionRe
 		return &CreateTransactionResponse{}, DomainToRESTError(err)
 	}
 
-	
 	return &CreateTransactionResponse{
 		Body: DomainTransactionToREST(newTransaction),
 	}, nil

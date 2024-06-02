@@ -2,7 +2,7 @@ package entities
 
 import "fmt"
 
-type BaseError struct{
+type BaseError struct {
 	error
 	Msg string
 }

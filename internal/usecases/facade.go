@@ -8,13 +8,12 @@ import (
 	"github.com/lewis97/TechnicalTask/internal/usecases/transactions"
 )
 
-
 type Facade struct {
-	AccountsUsecase *accounts.AccountsUsecase
+	AccountsUsecase     *accounts.AccountsUsecase
 	TransactionsUsecase *transactions.TransactionsUsecase
 }
 
-func (f *Facade) GetAccount(ctx context.Context, input *accounts.GetAcccountInput, repo *accounts.AccountUsecaseRepos) (entities.Account, error){
+func (f *Facade) GetAccount(ctx context.Context, input *accounts.GetAcccountInput, repo *accounts.AccountUsecaseRepos) (entities.Account, error) {
 	return f.AccountsUsecase.GetAccount(ctx, input, repo)
 }
 
@@ -22,6 +21,6 @@ func (f *Facade) CreateAccount(ctx context.Context, input *accounts.CreateAccoun
 	return f.AccountsUsecase.CreateAccount(ctx, input, repo)
 }
 
-func (f *Facade) CreateTransaction(ctx context.Context, input *transactions.CreateTransactionInput, repo *transactions.TransactionsUsecaseRepos) (entities.Transaction, error){
+func (f *Facade) CreateTransaction(ctx context.Context, input *transactions.CreateTransactionInput, repo *transactions.TransactionsUsecaseRepos) (entities.Transaction, error) {
 	return f.TransactionsUsecase.CreateTransaction(ctx, input, repo)
 }

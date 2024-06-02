@@ -8,17 +8,17 @@ import (
 )
 
 type Account struct {
-	ID string `db:"id"`
-	DocumentNumber uint `db:"document_num"`
-	CreatedAt time.Time `db:"created_at"`
+	ID             string    `db:"id"`
+	DocumentNumber uint      `db:"document_num"`
+	CreatedAt      time.Time `db:"created_at"`
 }
 
 type Transaction struct {
-	ID string `db:"id"`
-	AccountID string `db:"account_id"`
-	OperationID int `db:"operation_id"`
-	Amount int `db:"amount"`
-	EventTime time.Time `db:"event_time"`
+	ID          string    `db:"id"`
+	AccountID   string    `db:"account_id"`
+	OperationID int       `db:"operation_id"`
+	Amount      int       `db:"amount"`
+	EventTime   time.Time `db:"event_time"`
 }
 
 func AccountModelToDomain(account Account) (*entities.Account, error) {
@@ -27,8 +27,8 @@ func AccountModelToDomain(account Account) (*entities.Account, error) {
 		return nil, err
 	}
 	return &entities.Account{
-		ID: id,
+		ID:             id,
 		DocumentNumber: account.DocumentNumber,
-		CreatedAt: account.CreatedAt,
+		CreatedAt:      account.CreatedAt,
 	}, nil
 }

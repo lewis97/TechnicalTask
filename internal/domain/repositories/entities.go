@@ -2,8 +2,8 @@ package repositories
 
 import (
 	"context"
-	"github.com/lewis97/TechnicalTask/internal/domain/entities"
 	"github.com/google/uuid"
+	"github.com/lewis97/TechnicalTask/internal/domain/entities"
 )
 
 // This contains all the applications interactions with our datastore

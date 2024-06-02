@@ -16,12 +16,12 @@ type TransactionsUsecase struct {
 }
 
 type TransactionsUsecaseRepos struct {
-	Logger slog.Logger
-	AccountsDatastore repositories.Accounts
+	Logger                slog.Logger
+	AccountsDatastore     repositories.Accounts
 	TransactionsDatastore repositories.Transactions
 }
 
-func NewAccountsUsecase(uuidGenerator uuidgen.UUIDGenerator) *TransactionsUsecase{
+func NewAccountsUsecase(uuidGenerator uuidgen.UUIDGenerator) *TransactionsUsecase {
 	return &TransactionsUsecase{
 		uuidGen: uuidGenerator,
 	}
@@ -30,23 +30,22 @@ func NewAccountsUsecase(uuidGenerator uuidgen.UUIDGenerator) *TransactionsUsecas
 // Create a transaction
 
 type CreateTransactionInput struct {
-	AccountID uuid.UUID
+	AccountID   uuid.UUID
 	OperationID int
-	Amount int
+	Amount      int
 }
-
 
 func (input *CreateTransactionInput) Validate() error {
 	if !entities.ValidateOperationType(input.OperationID) {
 		return entities.NewInvalidInputError("Invalid operation type id")
 	}
-	if input.Amount <=0 {
+	if input.Amount <= 0 {
 		return entities.NewInvalidInputError("Invalid amount - must be >0")
 	}
 	return nil
 }
 
-func (tc *TransactionsUsecase) CreateTransaction(ctx context.Context, input *CreateTransactionInput, repo *TransactionsUsecaseRepos) (entities.Transaction, error){
+func (tc *TransactionsUsecase) CreateTransaction(ctx context.Context, input *CreateTransactionInput, repo *TransactionsUsecaseRepos) (entities.Transaction, error) {
 	// Validate the input
 	err := input.Validate()
 	if err != nil {
@@ -54,7 +53,7 @@ func (tc *TransactionsUsecase) CreateTransaction(ctx context.Context, input *Cre
 		return entities.Transaction{}, err
 	}
 
-	// Check account exists for this transaction 
+	// Check account exists for this transaction
 	_, err = repo.AccountsDatastore.GetAccount(ctx, input.AccountID)
 	if err != nil {
 		// Check if err is because the account does not exist vs some other issue
@@ -83,11 +82,11 @@ func (tc *TransactionsUsecase) CreateTransaction(ctx context.Context, input *Cre
 	}
 
 	newTransaction := entities.Transaction{
-		ID: id,
-		AccountID: input.AccountID,
+		ID:            id,
+		AccountID:     input.AccountID,
 		OperationType: entities.OperationType(input.OperationID),
-		Amount: input.Amount,
-		EventDate: now,
+		Amount:        input.Amount,
+		EventDate:     now,
 	}
 
 	err = repo.TransactionsDatastore.CreateTransaction(ctx, newTransaction)

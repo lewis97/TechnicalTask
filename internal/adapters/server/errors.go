@@ -10,7 +10,7 @@ var UnimplementedErr = huma.Error501NotImplemented("method is not implemented ye
 func DomainToRESTError(dErr error) huma.StatusError {
 	errMsg := dErr.Error()
 
-	switch err := dErr.(type){
+	switch err := dErr.(type) {
 	case *entities.InvalidInputError:
 		return huma.Error400BadRequest(err.Error())
 	case *entities.AccountNotFound:

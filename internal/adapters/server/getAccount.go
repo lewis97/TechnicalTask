@@ -29,7 +29,7 @@ func (s *Server) GetAccount(ctx context.Context, req *GetAccountRequest) (*GetAc
 		AccountID: accountUUID,
 	}
 	repo := &accounts.AccountUsecaseRepos{
-		Logger: s.logger,
+		Logger:            s.logger,
 		AccountsDatastore: s.datastore,
 	}
 

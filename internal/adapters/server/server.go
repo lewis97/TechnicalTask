@@ -24,14 +24,14 @@ type Usecase interface {
 type Dependencies struct {
 	Logger    slog.Logger
 	Datastore *datastore.Datastore
-	Usecases Usecase
+	Usecases  Usecase
 }
 
 type Server struct {
 	routes    *http.ServeMux
 	logger    slog.Logger
 	datastore *datastore.Datastore
-	usecases Usecase
+	usecases  Usecase
 }
 
 func (s Server) Start(addr string, port int) {
@@ -55,7 +55,7 @@ func New(deps Dependencies) *Server {
 		routes:    router,
 		logger:    deps.Logger,
 		datastore: deps.Datastore,
-		usecases: deps.Usecases,
+		usecases:  deps.Usecases,
 	}
 
 	// Map routes

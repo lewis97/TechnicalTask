@@ -22,18 +22,18 @@ type Transaction struct {
 
 func DomainAccountToREST(account entities.Account) Account {
 	return Account{
-		ID: account.ID.String(),
+		ID:             account.ID.String(),
 		DocumentNumber: account.DocumentNumber,
-		CreatedAt: account.CreatedAt,
+		CreatedAt:      account.CreatedAt,
 	}
 }
 
 func DomainTransactionToREST(transaction entities.Transaction) Transaction {
 	return Transaction{
-		ID: transaction.ID.String(),
-		AccountID: transaction.AccountID.String(),
+		ID:            transaction.ID.String(),
+		AccountID:     transaction.AccountID.String(),
 		OperationType: int(transaction.OperationType),
-		Amount: transaction.Amount,
-		EventDate: transaction.EventDate,
+		Amount:        transaction.Amount,
+		EventDate:     transaction.EventDate,
 	}
 }

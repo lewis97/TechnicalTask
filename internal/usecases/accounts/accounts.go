@@ -2,9 +2,9 @@ package accounts
 
 import (
 	"context"
+	"github.com/google/uuid"
 	"log/slog"
 	"time"
-	"github.com/google/uuid"
 
 	"github.com/lewis97/TechnicalTask/internal/domain/entities"
 	"github.com/lewis97/TechnicalTask/internal/domain/repositories"
@@ -15,15 +15,15 @@ import (
 
 // Passing in a uuid generator to make mocking/UT easier
 type AccountsUsecase struct {
-	uuidGen uuidgen.UUIDGenerator 
+	uuidGen uuidgen.UUIDGenerator
 }
 
 type AccountUsecaseRepos struct {
-	Logger slog.Logger
+	Logger            slog.Logger
 	AccountsDatastore repositories.Accounts
 }
 
-func NewAccountsUsecase(uuidGenerator uuidgen.UUIDGenerator) *AccountsUsecase{
+func NewAccountsUsecase(uuidGenerator uuidgen.UUIDGenerator) *AccountsUsecase {
 	return &AccountsUsecase{
 		uuidGen: uuidGenerator,
 	}
@@ -35,7 +35,7 @@ type GetAcccountInput struct {
 	AccountID uuid.UUID
 }
 
-func (ac *AccountsUsecase) GetAccount(ctx context.Context, input *GetAcccountInput, repo *AccountUsecaseRepos) (entities.Account, error){
+func (ac *AccountsUsecase) GetAccount(ctx context.Context, input *GetAcccountInput, repo *AccountUsecaseRepos) (entities.Account, error) {
 	account, err := repo.AccountsDatastore.GetAccount(ctx, input.AccountID)
 	if err != nil {
 		repo.Logger.Error(
@@ -56,7 +56,7 @@ type CreateAccountInput struct {
 	DocumentNumber uint
 }
 
-// Validate account creation input 
+// Validate account creation input
 func (input *CreateAccountInput) Validate() error {
 	// No default values
 	if input.DocumentNumber == 0 {
@@ -64,7 +64,6 @@ func (input *CreateAccountInput) Validate() error {
 	}
 	return nil
 }
-
 
 func (ac *AccountsUsecase) CreateAccount(ctx context.Context, input *CreateAccountInput, repo *AccountUsecaseRepos) (entities.Account, error) {
 	// Validate the input
@@ -83,9 +82,9 @@ func (ac *AccountsUsecase) CreateAccount(ctx context.Context, input *CreateAccou
 	now := time.Now()
 
 	newAccount := entities.Account{
-		ID: id,
+		ID:             id,
 		DocumentNumber: input.DocumentNumber,
-		CreatedAt: now,
+		CreatedAt:      now,
 	}
 
 	// Create the account in the datastore
@@ -97,6 +96,5 @@ func (ac *AccountsUsecase) CreateAccount(ctx context.Context, input *CreateAccou
 
 	repo.Logger.Info("successfully created new account", "accountID", id)
 	return newAccount, nil
-	
-}
 
+}
