@@ -6,10 +6,12 @@ import (
 	"os"
 
 	toml "github.com/pelletier/go-toml"
+	"github.com/lewis97/TechnicalTask/internal/drivers/postgres"
 )
 
 type Config struct {
 	REST ServerConfig
+	Database postgres.DatabaseConfig
 }
 
 type ServerConfig struct {

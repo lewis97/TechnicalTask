@@ -7,7 +7,7 @@ RUN set -eux; \
 		make \
         curl \
 		jq \
-        # postgresql \
+        postgresql \
 	;
 
 WORKDIR /transactionServer

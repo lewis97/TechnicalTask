@@ -8,16 +8,20 @@ import (
 
 	"github.com/danielgtaylor/huma/v2"
 	"github.com/danielgtaylor/huma/v2/adapters/humago"
+	"github.com/lewis97/TechnicalTask/internal/adapters/datastore"
+	
 )
 
 
 type Dependencies struct {
 	Logger slog.Logger
+	Datastore *datastore.Datastore
 }
 
 type Server struct {
 	routes         *http.ServeMux
 	logger 		   slog.Logger
+	datastore *datastore.Datastore
 }
 
 func (s Server) Start(addr string, port int) {
@@ -40,6 +44,7 @@ func New(deps Dependencies) *Server {
 	s := &Server{
 		routes:         router,
 		logger: deps.Logger,
+		datastore: deps.Datastore,
 
 	}
 

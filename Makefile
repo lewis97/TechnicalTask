@@ -13,3 +13,7 @@ dev-shell:
 .PHONY: build
 build:
 	go build -o dist/ ./cmd/...
+
+.PHONY: dev-db-connect
+dev-db-connect:
+	psql -h postgres -U ${DB_USER} ${DB_NAME}
