@@ -17,10 +17,9 @@ const (
 )
 
 type Transaction struct {
-	ID uuid.UUID
-	AccountID uuid.UUID
+	ID            uuid.UUID
+	AccountID     uuid.UUID
 	OperationType OperationType
-	Amount int
-	EventDate time.Time
-
+	Amount        int
+	EventDate     time.Time
 }

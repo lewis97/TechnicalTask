@@ -39,7 +39,7 @@ func main() {
 
 	// Setup & start REST server
 	deps := server.Dependencies{
-		Logger: *logger,
+		Logger:    *logger,
 		Datastore: ds,
 	}
 	server := server.New(deps)

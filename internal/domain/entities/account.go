@@ -6,8 +6,7 @@ import (
 )
 
 type Account struct {
-	ID uuid.UUID
+	ID             uuid.UUID
 	DocumentNumber uint
-	CreatedAt time.Time
+	CreatedAt      time.Time
 }
-

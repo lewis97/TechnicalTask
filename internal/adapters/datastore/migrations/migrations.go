@@ -1,8 +1,6 @@
 package migrations
 
-import (
-	
-)
+import ()
 
 import (
 	"embed"

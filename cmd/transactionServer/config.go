@@ -5,18 +5,18 @@ import (
 	"log"
 	"os"
 
-	toml "github.com/pelletier/go-toml"
 	"github.com/lewis97/TechnicalTask/internal/drivers/postgres"
+	toml "github.com/pelletier/go-toml"
 )
 
 type Config struct {
-	REST ServerConfig
+	REST     ServerConfig
 	Database postgres.DatabaseConfig
 }
 
 type ServerConfig struct {
 	Address string
-	Port int
+	Port    int
 }
 
 func LoadConfigFromFile(tomlPath string) *Config {

@@ -14,6 +14,3 @@ type Accounts interface {
 type Transactions interface {
 	CreateTransaction(ctx context.Context, transaction entities.Transaction) error
 }
-
-
-

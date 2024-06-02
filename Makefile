@@ -14,6 +14,11 @@ dev-shell:
 build:
 	go build -o dist/ ./cmd/...
 
+.PHONY: fmt
+fmt:
+	gofmt -w .
+
 .PHONY: dev-db-connect
 dev-db-connect:
 	psql -h postgres -U ${DB_USER} ${DB_NAME}
+# TODO: some more db commands to run migrations up and down (+ seed db?)
