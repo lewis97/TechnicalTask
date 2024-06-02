@@ -47,7 +47,7 @@ func New(deps Dependencies) *Server {
 
 	// Map routes
 	huma.Get(api, "/hello", s.TestHandler)
-	huma.Get(api, "/accounts/{accountId}", s.GetAccount) // get account by ID
+	huma.Get(api, "/accounts/{accountID}", s.GetAccount) // get account by ID
 	huma.Post(api, "/accounts", s.CreateAccount)         // create account
 	huma.Post(api, "/transactions", s.CreateTransaction) // create transaction
 
