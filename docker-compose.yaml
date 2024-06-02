@@ -1,0 +1,16 @@
+services:
+  transaction-dev:
+    build:
+      dockerfile: Dockerfile
+      context: .
+      target: dev
+    container_name: transaction-dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/transactionServer
+    tty: true
+    # links:
+    #   - postgres
+    environment:
+    - CONFIG_FILE=/transactionServer/bench-config.toml
