@@ -1,6 +1,5 @@
 package server
 
-
 import (
 	"context"
 	"fmt"
@@ -13,17 +12,17 @@ type TestRequestBody struct {
 }
 
 type TestResponse struct {
-	Body TestResponseBody 
+	Body TestResponseBody
 }
 
 type TestResponseBody struct {
 	Msg string `json:"msg" example:"helo doc:"msg"`
 }
 
-func (s *Server) TestHandler(ctx context.Context, req *TestRequest) (*TestResponse, error){
+func (s *Server) TestHandler(ctx context.Context, req *TestRequest) (*TestResponse, error) {
 	// name := req.Body.Name
 	respBody := TestResponseBody{
-		Msg: fmt.Sprintf("Hello"),// %s", name),
+		Msg: fmt.Sprintf("Hello"), // %s", name),
 	}
 	return &TestResponse{
 		Body: respBody,
