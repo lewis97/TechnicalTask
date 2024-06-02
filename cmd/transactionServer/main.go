@@ -21,10 +21,14 @@ func main() {
 	}
 	config := LoadConfigFromFile(configPath)
 
+	// Set logger
+	logger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
+
+
 	// Connect to database
 	db := postgres.NewDBConnection(config.Database)
 	defer db.Close()
-	ds := datastore.NewDatastore(db)
+	ds := datastore.NewDatastore(db, *logger)
 
 	// Run DB migrations
 	migration := migrations.GetMigrations()
@@ -34,8 +38,6 @@ func main() {
 		log.Fatal("DB Migrations failed: ", err.Error())
 	}
 
-	// Set logger
-	logger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
 
 	// Setup & start REST server
 	deps := server.Dependencies{

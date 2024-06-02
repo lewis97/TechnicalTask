@@ -1,13 +1,18 @@
 package datastore
 
-import "github.com/jmoiron/sqlx"
+import (
+	"log/slog"
+	"github.com/jmoiron/sqlx"
+)
 
 type Datastore struct {
 	db *sqlx.DB
+	logger slog.Logger
 }
 
-func NewDatastore(db *sqlx.DB) *Datastore {
+func NewDatastore(db *sqlx.DB, logger slog.Logger) *Datastore {
 	return &Datastore{
 		db: db,
+		logger: logger,
 	}
 }

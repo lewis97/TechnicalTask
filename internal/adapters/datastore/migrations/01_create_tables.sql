@@ -3,6 +3,7 @@
 CREATE TABLE accounts (
     id TEXT PRIMARY KEY,
     document_num INT NOT NULL
+    created_at TIMESTAMP NOT NULL
 );
 
 CREATE TYPE operation_type AS ENUM ('INVALID', 'CASH PURCHASE', 'INSTALLMENT PURCHASE', 'WITHDRAWAL', 'PAYMENT');
