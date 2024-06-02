@@ -3,24 +3,22 @@ package server
 import (
 	"fmt"
 	"log"
-	"net/http"
 	"log/slog"
+	"net/http"
 
 	"github.com/danielgtaylor/huma/v2"
 	"github.com/danielgtaylor/huma/v2/adapters/humago"
 	"github.com/lewis97/TechnicalTask/internal/adapters/datastore"
-	
 )
 
-
 type Dependencies struct {
-	Logger slog.Logger
+	Logger    slog.Logger
 	Datastore *datastore.Datastore
 }
 
 type Server struct {
-	routes         *http.ServeMux
-	logger 		   slog.Logger
+	routes    *http.ServeMux
+	logger    slog.Logger
 	datastore *datastore.Datastore
 }
 
@@ -42,13 +40,16 @@ func New(deps Dependencies) *Server {
 	api := humago.New(router, huma.DefaultConfig("Transaction service REST API", "1.0.0"))
 
 	s := &Server{
-		routes:         router,
-		logger: deps.Logger,
+		routes:    router,
+		logger:    deps.Logger,
 		datastore: deps.Datastore,
-
 	}
 
+	// Map routes
 	huma.Get(api, "/hello", s.TestHandler)
+	huma.Get(api, "/accounts/{accountId}", s.GetAccount) // get account by ID
+	huma.Post(api, "/accounts", s.CreateAccount)         // create account
+	huma.Post(api, "/transactions", s.CreateTransaction) // create transaction
 
 	return s
 }
