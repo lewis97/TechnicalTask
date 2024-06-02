@@ -12,11 +12,13 @@ import (
 	"github.com/lewis97/TechnicalTask/internal/adapters/datastore"
 	"github.com/lewis97/TechnicalTask/internal/domain/entities"
 	"github.com/lewis97/TechnicalTask/internal/usecases/accounts"
+	"github.com/lewis97/TechnicalTask/internal/usecases/transactions"
 )
 
 type Usecase interface {
 	GetAccount(ctx context.Context, input *accounts.GetAcccountInput, repo *accounts.AccountUsecaseRepos) (entities.Account, error)
 	CreateAccount(ctx context.Context, input *accounts.CreateAccountInput, repo *accounts.AccountUsecaseRepos) (entities.Account, error)
+	CreateTransaction(ctx context.Context, input *transactions.CreateTransactionInput, repo *transactions.TransactionsUsecaseRepos) (entities.Transaction, error)
 }
 
 type Dependencies struct {

@@ -27,3 +27,13 @@ func DomainAccountToREST(account entities.Account) Account {
 		CreatedAt: account.CreatedAt,
 	}
 }
+
+func DomainTransactionToREST(transaction entities.Transaction) Transaction {
+	return Transaction{
+		ID: transaction.ID.String(),
+		AccountID: transaction.AccountID.String(),
+		OperationType: int(transaction.OperationType),
+		Amount: transaction.Amount,
+		EventDate: transaction.EventDate,
+	}
+}

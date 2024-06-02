@@ -12,7 +12,7 @@ func (ds *Datastore) CreateTransaction(ctx context.Context, transaction entities
 		"INSERT INTO transactions (id,account_id,operation_id,amount,event_time) VALUES ($1,$2,$3,$4,$5)",
 		transaction.ID,
 		transaction.AccountID,
-		transaction.OperationType,
+		transaction.OperationType.String(),
 		transaction.Amount,
 		transaction.EventDate,
 	)

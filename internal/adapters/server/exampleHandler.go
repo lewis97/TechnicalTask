@@ -16,7 +16,7 @@ type TestResponse struct {
 }
 
 type TestResponseBody struct {
-	Msg string `json:"msg" example:"helo doc:"msg"`
+	Msg string `json:"msg" example:"hello" doc:"msg"`
 }
 
 func (s *Server) TestHandler(ctx context.Context, req *TestRequest) (*TestResponse, error) {

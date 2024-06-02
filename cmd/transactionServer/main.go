@@ -12,6 +12,7 @@ import (
 	"github.com/lewis97/TechnicalTask/internal/drivers/uuidgen"
 	"github.com/lewis97/TechnicalTask/internal/usecases"
 	"github.com/lewis97/TechnicalTask/internal/usecases/accounts"
+	"github.com/lewis97/TechnicalTask/internal/usecases/transactions"
 	migrate "github.com/rubenv/sql-migrate"
 )
 
@@ -49,6 +50,7 @@ func main() {
 		Datastore: ds,
 		Usecases: &usecases.Facade{
 			AccountsUsecase: accounts.NewAccountsUsecase(uuidGenerator),
+			TransactionsUsecase: transactions.NewAccountsUsecase(uuidGenerator),
 		},
 	}
 	server := server.New(deps)
