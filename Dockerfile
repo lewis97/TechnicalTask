@@ -8,10 +8,14 @@ RUN set -eux; \
         curl \
 		jq \
         postgresql \
+		git \
 	;
+
+RUN go install github.com/vektra/mockery/v2@v2.43.2
 
 WORKDIR /transactionServer
 
 COPY . .
 
 RUN go get -d -v ./...
+

@@ -1,0 +1,34 @@
+# Configuration for mockery.
+#
+
+
+dir: 'mocks/{{ trimPrefix .PackagePath "github.com/lewis97/TechnicalTask/internal/" }}'
+filename: "{{ .InterfaceNameCamel }}.go"
+mockname: "{{ .InterfaceName }}"
+outpkg: mocks
+
+packages:
+  github.com/lewis97/TechnicalTask/internal/adapters/server:
+    config:
+      all: true
+      recursive: true
+  github.com/lewis97/TechnicalTask/internal/adapters/datastore:
+    config:
+      all: true
+      recursive: true
+  github.com/lewis97/TechnicalTask/internal/usecases/accounts:
+    config:
+      all: true
+      recursive: true
+  github.com/lewis97/TechnicalTask/internal/usecases/transactions:
+    config:
+      all: true
+      recursive: true
+  github.com/lewis97/TechnicalTask/internal/domain/repositories:
+    config:
+      all: true
+      recursive: true
+  github.com/lewis97/TechnicalTask/internal/drivers/uuidgen:
+    config:
+      all: true
+      recursive: true
