@@ -1,13 +1,17 @@
 package server
 
-import "context"
+import (
+	"context"
+
+	"github.com/lewis97/TechnicalTask/internal/usecases/accounts"
+)
 
 type CreateAccountRequest struct {
 	Body CreateAccountRequestBody `required:"true"`
 }
 
 type CreateAccountRequestBody struct {
-	DocumentNumber int `json:"document_number" required:"true" minLength:"1" example:"123456789" doc:"Document number of account"`
+	DocumentNumber int `json:"document_number" required:"true" minLength:"1" minimum:"1" example:"123456789" doc:"Document number of account"`
 }
 
 type CreateAccountResponse struct {
@@ -15,5 +19,23 @@ type CreateAccountResponse struct {
 }
 
 func (s *Server) CreateAccount(ctx context.Context, req *CreateAccountRequest) (*CreateAccountResponse, error) {
-	return &CreateAccountResponse{}, UnimplementedErr
+
+	// Setup usecase inputs
+	input := &accounts.CreateAccountInput{
+		DocumentNumber: uint(req.Body.DocumentNumber),
+	}
+	repo := &accounts.AccountUsecaseRepos{
+		Logger: s.logger,
+		AccountsDatastore: s.datastore,
+	}
+
+	newAccount, err := s.usecases.CreateAccount(ctx, input, repo)
+	
+	if err != nil {
+		return &CreateAccountResponse{}, DomainToRESTError(err)
+	}
+
+	return &CreateAccountResponse{
+		Body: DomainAccountToREST(newAccount),
+	}, nil
 }

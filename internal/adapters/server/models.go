@@ -2,6 +2,8 @@ package server
 
 import (
 	"time"
+
+	"github.com/lewis97/TechnicalTask/internal/domain/entities"
 )
 
 type Account struct {
@@ -16,4 +18,12 @@ type Transaction struct {
 	OperationType int       `json:"operation_type" example:"2" doc:"Operation Type"`
 	Amount        int       `json:"amount" example:"150" doc:"Transaction amount in the lowest denomination"`
 	EventDate     time.Time `json:"event_date" example:"2020-01-05T09:34:18.5893223" doc:"Date and time of transaction"`
+}
+
+func DomainAccountToREST(account entities.Account) Account {
+	return Account{
+		ID: account.ID.String(),
+		DocumentNumber: account.DocumentNumber,
+		CreatedAt: account.CreatedAt,
+	}
 }

@@ -1,6 +1,7 @@
 package server
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"log/slog"
@@ -9,17 +10,26 @@ import (
 	"github.com/danielgtaylor/huma/v2"
 	"github.com/danielgtaylor/huma/v2/adapters/humago"
 	"github.com/lewis97/TechnicalTask/internal/adapters/datastore"
+	"github.com/lewis97/TechnicalTask/internal/domain/entities"
+	"github.com/lewis97/TechnicalTask/internal/usecases/accounts"
 )
+
+type Usecase interface {
+	GetAccount(ctx context.Context, input *accounts.GetAcccountInput, repo *accounts.AccountUsecaseRepos) (entities.Account, error)
+	CreateAccount(ctx context.Context, input *accounts.CreateAccountInput, repo *accounts.AccountUsecaseRepos) (entities.Account, error)
+}
 
 type Dependencies struct {
 	Logger    slog.Logger
 	Datastore *datastore.Datastore
+	Usecases Usecase
 }
 
 type Server struct {
 	routes    *http.ServeMux
 	logger    slog.Logger
 	datastore *datastore.Datastore
+	usecases Usecase
 }
 
 func (s Server) Start(addr string, port int) {
@@ -43,6 +53,7 @@ func New(deps Dependencies) *Server {
 		routes:    router,
 		logger:    deps.Logger,
 		datastore: deps.Datastore,
+		usecases: deps.Usecases,
 	}
 
 	// Map routes

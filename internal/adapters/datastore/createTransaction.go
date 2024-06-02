@@ -9,7 +9,7 @@ import (
 func (ds *Datastore) CreateTransaction(ctx context.Context, transaction entities.Transaction) error {
 	_, err := ds.db.ExecContext(
 		ctx,
-		"INSERT INTO transactions (id,account_id,operation_id,amount,event_time) VALUES (?,?,?,?,?)",
+		"INSERT INTO transactions (id,account_id,operation_id,amount,event_time) VALUES ($1,$2,$3,$4,$5)",
 		transaction.ID,
 		transaction.AccountID,
 		transaction.OperationType,

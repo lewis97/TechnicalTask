@@ -9,6 +9,9 @@ import (
 	"github.com/lewis97/TechnicalTask/internal/adapters/datastore/migrations"
 	"github.com/lewis97/TechnicalTask/internal/adapters/server"
 	"github.com/lewis97/TechnicalTask/internal/drivers/postgres"
+	"github.com/lewis97/TechnicalTask/internal/drivers/uuidgen"
+	"github.com/lewis97/TechnicalTask/internal/usecases"
+	"github.com/lewis97/TechnicalTask/internal/usecases/accounts"
 	migrate "github.com/rubenv/sql-migrate"
 )
 
@@ -38,11 +41,15 @@ func main() {
 		log.Fatal("DB Migrations failed: ", err.Error())
 	}
 
+	uuidGenerator := uuidgen.NewGoogleUUIDGen()
 
 	// Setup & start REST server
 	deps := server.Dependencies{
 		Logger:    *logger,
 		Datastore: ds,
+		Usecases: &usecases.Facade{
+			AccountsUsecase: accounts.NewAccountsUsecase(uuidGenerator),
+		},
 	}
 	server := server.New(deps)
 	server.Start(config.REST.Address, config.REST.Port)
