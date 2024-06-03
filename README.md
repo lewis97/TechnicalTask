@@ -34,11 +34,13 @@ This will build the project in the `dist` directory within the container. The se
 ./dist/transactionServer
 ```
 
+The server will then be running and listening for request on `localhost:3000`.
+
 ### Sending requests
 
 The compose file used to create the dev env environment exposes the containers `3000` port to the host, so requests can be made either within the dev container or on the host machine.
 
-For example creating getting an account via `curl` on the host machine...
+For example getting an account via `curl` on the host machine...
 ```bash
 curl --request GET \
   --url http://localhost:3000/accounts/018fdf82-1286-7b07-9c4b-073403bfddf4 \
