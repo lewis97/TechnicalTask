@@ -29,7 +29,7 @@ func ValidateOperationType(ot int) bool {
 	return ot > 0 && ot <= 4
 }
 
-// Convert operation type enum to its string representation 
+// Convert operation type enum to its string representation
 func (ot OperationType) String() string {
 	switch ot {
 	case UnknownType:

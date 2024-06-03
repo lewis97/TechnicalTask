@@ -131,7 +131,7 @@ func (_c *Accounts_GetAccount_Call) RunAndReturn(run func(context.Context, uuid.
 }
 
 // GetAccountByDoc provides a mock function with given fields: ctx, documentNumber
-func (_m *Accounts) GetAccountByDoc(ctx context.Context, documentNumber uint) (*entities.Account, error) {
+func (_m *Accounts) GetAccountByDoc(ctx context.Context, documentNumber string) (*entities.Account, error) {
 	ret := _m.Called(ctx, documentNumber)
 
 	if len(ret) == 0 {
@@ -140,10 +140,10 @@ func (_m *Accounts) GetAccountByDoc(ctx context.Context, documentNumber uint) (*
 
 	var r0 *entities.Account
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, uint) (*entities.Account, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, string) (*entities.Account, error)); ok {
 		return rf(ctx, documentNumber)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, uint) *entities.Account); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, string) *entities.Account); ok {
 		r0 = rf(ctx, documentNumber)
 	} else {
 		if ret.Get(0) != nil {
@@ -151,7 +151,7 @@ func (_m *Accounts) GetAccountByDoc(ctx context.Context, documentNumber uint) (*
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, uint) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, string) error); ok {
 		r1 = rf(ctx, documentNumber)
 	} else {
 		r1 = ret.Error(1)
@@ -167,14 +167,14 @@ type Accounts_GetAccountByDoc_Call struct {
 
 // GetAccountByDoc is a helper method to define mock.On call
 //   - ctx context.Context
-//   - documentNumber uint
+//   - documentNumber string
 func (_e *Accounts_Expecter) GetAccountByDoc(ctx interface{}, documentNumber interface{}) *Accounts_GetAccountByDoc_Call {
 	return &Accounts_GetAccountByDoc_Call{Call: _e.mock.On("GetAccountByDoc", ctx, documentNumber)}
 }
 
-func (_c *Accounts_GetAccountByDoc_Call) Run(run func(ctx context.Context, documentNumber uint)) *Accounts_GetAccountByDoc_Call {
+func (_c *Accounts_GetAccountByDoc_Call) Run(run func(ctx context.Context, documentNumber string)) *Accounts_GetAccountByDoc_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(uint))
+		run(args[0].(context.Context), args[1].(string))
 	})
 	return _c
 }
@@ -184,7 +184,7 @@ func (_c *Accounts_GetAccountByDoc_Call) Return(_a0 *entities.Account, _a1 error
 	return _c
 }
 
-func (_c *Accounts_GetAccountByDoc_Call) RunAndReturn(run func(context.Context, uint) (*entities.Account, error)) *Accounts_GetAccountByDoc_Call {
+func (_c *Accounts_GetAccountByDoc_Call) RunAndReturn(run func(context.Context, string) (*entities.Account, error)) *Accounts_GetAccountByDoc_Call {
 	_c.Call.Return(run)
 	return _c
 }

@@ -6,10 +6,11 @@ import (
 	"github.com/google/uuid"
 	"github.com/lewis97/TechnicalTask/internal/domain/entities"
 )
+
 // These are datastore representations of our domain entities
 type Account struct {
 	ID             string    `db:"id"`
-	DocumentNumber uint      `db:"document_num"`
+	DocumentNumber string    `db:"document_num"`
 	CreatedAt      time.Time `db:"created_at"`
 }
 

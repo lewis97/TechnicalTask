@@ -13,7 +13,7 @@ type CreateAccountRequest struct {
 }
 
 type CreateAccountRequestBody struct {
-	DocumentNumber int `json:"document_number" required:"true" minLength:"1" minimum:"1" example:"123456789" doc:"Document number of account"`
+	DocumentNumber string `json:"document_number" required:"true" minLength:"1" example:"123456789" doc:"Document number of account"`
 }
 
 type CreateAccountResponse struct {
@@ -23,7 +23,7 @@ type CreateAccountResponse struct {
 func (s *Server) CreateAccount(ctx context.Context, req *CreateAccountRequest) (*CreateAccountResponse, error) {
 	// Setup usecase inputs
 	input := &accounts.CreateAccountInput{
-		DocumentNumber: uint(req.Body.DocumentNumber),
+		DocumentNumber: req.Body.DocumentNumber,
 	}
 	repo := &accounts.AccountUsecaseRepos{
 		Logger:            s.logger,

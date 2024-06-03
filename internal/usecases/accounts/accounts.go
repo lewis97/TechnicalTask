@@ -3,6 +3,7 @@ package accounts
 import (
 	"context"
 	"log/slog"
+	"strconv"
 
 	"github.com/google/uuid"
 
@@ -59,14 +60,14 @@ func (ac *AccountsUsecase) GetAccount(ctx context.Context, input *GetAcccountInp
 // Creating an account
 
 type CreateAccountInput struct {
-	DocumentNumber uint
+	DocumentNumber string
 }
 
 // Validate account creation input
 func (input *CreateAccountInput) Validate() error {
-	// No default values for document number
-	if input.DocumentNumber == 0 {
-		return entities.NewInvalidInputError("Document number must be specified and cannot be 0")
+	// Check document number is valid (is a number)
+	if docNumInt, err := strconv.Atoi(input.DocumentNumber); err != nil && docNumInt <= 0 {
+		return entities.NewInvalidInputError("Document number must be a number and cannot be blank or negative")
 	}
 	return nil
 }

@@ -50,7 +50,7 @@ func (s *Server) CreateTransaction(ctx context.Context, req *CreateTransactionRe
 	if err != nil {
 		return &CreateTransactionResponse{}, DomainToRESTError(err)
 	}
-	
+
 	// Return REST representation of response
 	return &CreateTransactionResponse{
 		Body: DomainTransactionToREST(newTransaction),

@@ -11,7 +11,7 @@ import (
 type Accounts interface {
 	CreateAccount(ctx context.Context, account entities.Account) error
 	GetAccount(ctx context.Context, accountID uuid.UUID) (*entities.Account, error)
-	GetAccountByDoc(ctx context.Context, documentNumber uint) (*entities.Account, error)
+	GetAccountByDoc(ctx context.Context, documentNumber string) (*entities.Account, error)
 }
 
 type Transactions interface {

@@ -26,13 +26,13 @@ func Test_DatastoreCreateAccount(t *testing.T) {
 
 	account := entities.Account{
 		ID:             accountID,
-		DocumentNumber: 123,
+		DocumentNumber: "123",
 		CreatedAt:      time.Now(),
 	}
 
 	testCases := []struct {
-		name string
-		setDBMock func(mock sqlmock.Sqlmock)
+		name          string
+		setDBMock     func(mock sqlmock.Sqlmock)
 		expectedError error
 	}{
 		{
@@ -40,7 +40,7 @@ func Test_DatastoreCreateAccount(t *testing.T) {
 			setDBMock: func(mock sqlmock.Sqlmock) {
 				// Arrange: mock database operations
 				// any successful result is okay (don't rely on this output other than it being a non-error)
-				mockSQLResult := sqlmock.NewResult(0, 1) 
+				mockSQLResult := sqlmock.NewResult(0, 1)
 				mock.
 					ExpectExec(expectedSQLstatement).
 					WithArgs(account.ID, account.DocumentNumber, account.CreatedAt).
@@ -76,7 +76,6 @@ func Test_DatastoreCreateAccount(t *testing.T) {
 
 			// Arrange setup inputs
 			ctx := context.Background()
-
 
 			datastore := NewDatastore(sqlxDB, *testLogger)
 

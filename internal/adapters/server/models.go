@@ -11,7 +11,7 @@ import (
 
 type Account struct {
 	ID             string    `json:"account_id" example:"018ef16a-31a7-7e11-a77d-78b2eea91e2f" doc:"Account ID"`
-	DocumentNumber uint      `json:"document_number" example:"123456789" doc:"Document number for account"`
+	DocumentNumber string    `json:"document_number" example:"123456789" doc:"Document number for account"`
 	CreatedAt      time.Time `json:"created_at" example:"2023-12-09T16:09:53.0Z" doc:"Account creation time"`
 }
 

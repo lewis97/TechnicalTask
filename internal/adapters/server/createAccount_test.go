@@ -20,7 +20,7 @@ import (
 func Test_CreateAccount(t *testing.T) {
 	// Arrange: common
 	ctx := context.Background()
-	docNumber := 123
+	docNumber := "123"
 
 	// Configure test logger
 	logAsserter := slogassert.New(t, slog.LevelInfo, nil)
@@ -45,14 +45,14 @@ func Test_CreateAccount(t *testing.T) {
 			name: "happy path",
 			mockAccount: entities.Account{
 				ID:             uuid,
-				DocumentNumber: uint(docNumber),
+				DocumentNumber: docNumber,
 				CreatedAt:      createdAt,
 			},
 			mockError: nil,
 			expectedResponse: &CreateAccountResponse{
 				Body: Account{
 					ID:             uuid.String(),
-					DocumentNumber: uint(docNumber),
+					DocumentNumber: docNumber,
 					CreatedAt:      createdAt,
 				},
 			},
@@ -87,7 +87,7 @@ func Test_CreateAccount(t *testing.T) {
 
 			// Arrange: mock the call to the usecases
 			expectedUsecaseInput := &accounts.CreateAccountInput{
-				DocumentNumber: uint(docNumber),
+				DocumentNumber: docNumber,
 			}
 			expectedUsecaseRepo := &accounts.AccountUsecaseRepos{
 				Logger:            *testLogger,

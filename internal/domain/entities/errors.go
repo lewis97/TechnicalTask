@@ -33,15 +33,15 @@ func NewAccountNotFoundByIDError(accountID string) *AccountNotFound {
 	}
 }
 
-func NewAccountNotFoundByDocNumError(docNum uint) *AccountNotFound {
-	msg := fmt.Sprintf("No account with document number %d found", docNum)
+func NewAccountNotFoundByDocNumError(docNum string) *AccountNotFound {
+	msg := fmt.Sprintf("No account with document number %s found", docNum)
 	return &AccountNotFound{
 		BaseError{Msg: msg},
 	}
 }
 
-func NewAccountAlreadyExistsError(docNum uint) *AccountAlreadyExists {
-	msg := fmt.Sprintf("Account already exists with document number %d", docNum)
+func NewAccountAlreadyExistsError(docNum string) *AccountAlreadyExists {
+	msg := fmt.Sprintf("Account already exists with document number %s", docNum)
 	return &AccountAlreadyExists{
 		BaseError{Msg: msg},
 	}

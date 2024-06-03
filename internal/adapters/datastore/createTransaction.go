@@ -6,7 +6,7 @@ import (
 	"github.com/lewis97/TechnicalTask/internal/domain/entities"
 )
 
-// Creates a new transaction in the database, returns nil if successful 
+// Creates a new transaction in the database, returns nil if successful
 func (ds *Datastore) CreateTransaction(ctx context.Context, transaction entities.Transaction) error {
 	_, err := ds.db.ExecContext(
 		ctx,
@@ -21,6 +21,6 @@ func (ds *Datastore) CreateTransaction(ctx context.Context, transaction entities
 	if err != nil {
 		ds.logger.Error("failed to create transaction in database", "error", err.Error())
 	}
-	
+
 	return err
 }

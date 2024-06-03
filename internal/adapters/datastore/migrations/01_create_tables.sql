@@ -2,7 +2,7 @@
 
 CREATE TABLE accounts (
     id TEXT PRIMARY KEY,
-    document_num INT NOT NULL UNIQUE,
+    document_num TEXT NOT NULL UNIQUE,
     created_at TIMESTAMP NOT NULL
 );
 

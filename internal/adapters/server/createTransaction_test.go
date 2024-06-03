@@ -112,7 +112,7 @@ func Test_CreateTransaction(t *testing.T) {
 				Datastore: &datastore.Datastore{},
 				Usecases:  mockUsecase,
 			})
-			
+
 			// Act
 			response, err := server.CreateTransaction(ctx, &tc.request)
 

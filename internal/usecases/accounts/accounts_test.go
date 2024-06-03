@@ -19,7 +19,7 @@ import (
 func Test_CreateAccount_HappyPath(t *testing.T) {
 	// Arrange
 	ctx := context.Background()
-	docNum := uint(123)
+	docNum := "123"
 
 	// Arrange: generate new uuid for account
 	accountID, err := uuid.NewV7()
@@ -69,7 +69,7 @@ func Test_CreateAccount_HappyPath(t *testing.T) {
 
 	// Act
 	response, err := accountsUsecase.CreateAccount(ctx, &createAccountInput, &accountRepos)
-	
+
 	// Assert
 	assert.NoError(t, err)
 	assert.Equal(t, expectedAccount, response)

@@ -9,7 +9,7 @@ import (
 )
 
 // Queries the database for a given account by the accounts ID
-func (ds *Datastore) GetAccountByDoc(ctx context.Context, documentNumber uint) (*entities.Account, error) {
+func (ds *Datastore) GetAccountByDoc(ctx context.Context, documentNumber string) (*entities.Account, error) {
 	var account Account // will hold the account record if found
 
 	// Query database and store the fetched row (account) in account struct
