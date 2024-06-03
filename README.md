@@ -21,6 +21,8 @@ make dev-shell
 make dev-down
 ```
 
+Alternatively, `docker compose up -d` and `docker compose exec transaction-dev sh` can be used instead of `make dev-up` and `make dev-shell`.
+
 ### Start the server
 
 **From within the dev env:**
