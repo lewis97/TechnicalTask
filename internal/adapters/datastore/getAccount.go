@@ -15,7 +15,7 @@ func (ds *Datastore) GetAccount(ctx context.Context, accountID uuid.UUID) (*enti
 	var account Account
 	err := ds.db.QueryRowxContext(
 		ctx,
-		"SELECT id,document_num FROM accounts WHERE id = $1",
+		"SELECT id,document_num,created_at FROM accounts WHERE id = $1",
 		id,
 	).StructScan(&account)
 

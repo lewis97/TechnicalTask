@@ -25,6 +25,8 @@ require (
 )
 
 require (
+	github.com/DATA-DOG/go-sqlmock v1.5.2
 	github.com/go-gorp/gorp/v3 v3.1.0 // indirect
 	github.com/jackc/pgx/v5 v5.6.0
+	github.com/thejerf/slogassert v0.3.2
 )

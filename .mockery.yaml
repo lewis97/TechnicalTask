@@ -32,3 +32,7 @@ packages:
     config:
       all: true
       recursive: true
+  github.com/lewis97/TechnicalTask/internal/drivers/clock:
+    config:
+      all: true
+      recursive: true

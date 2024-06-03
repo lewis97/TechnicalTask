@@ -3,16 +3,17 @@ package transactions
 import (
 	"context"
 	"log/slog"
-	"time"
 
 	"github.com/google/uuid"
 	"github.com/lewis97/TechnicalTask/internal/domain/entities"
 	"github.com/lewis97/TechnicalTask/internal/domain/repositories"
+	"github.com/lewis97/TechnicalTask/internal/drivers/clock"
 	"github.com/lewis97/TechnicalTask/internal/drivers/uuidgen"
 )
 
 type TransactionsUsecase struct {
 	uuidGen uuidgen.UUIDGenerator
+	clock clock.Clock
 }
 
 type TransactionsUsecaseRepos struct {
@@ -21,9 +22,10 @@ type TransactionsUsecaseRepos struct {
 	TransactionsDatastore repositories.Transactions
 }
 
-func NewAccountsUsecase(uuidGenerator uuidgen.UUIDGenerator) *TransactionsUsecase {
+func NewTransactionUsecase(uuidGenerator uuidgen.UUIDGenerator, clock clock.Clock) *TransactionsUsecase {
 	return &TransactionsUsecase{
 		uuidGen: uuidGenerator,
+		clock: clock,
 	}
 }
 
@@ -73,7 +75,7 @@ func (tc *TransactionsUsecase) CreateTransaction(ctx context.Context, input *Cre
 		return entities.Transaction{}, err
 	}
 
-	now := time.Now()
+	now := tc.clock.Now()
 
 	// Set amount based on operation type
 	if input.OperationID != int(entities.Payment) {

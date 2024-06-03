@@ -27,3 +27,7 @@ dev-db-connect:
 mocks:
 	rm -rf mocks/
 	mockery
+
+.PHONY: unit
+unit:
+	go test ./...

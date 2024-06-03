@@ -10,6 +10,7 @@ import (
 	"github.com/lewis97/TechnicalTask/internal/adapters/server"
 	"github.com/lewis97/TechnicalTask/internal/drivers/postgres"
 	"github.com/lewis97/TechnicalTask/internal/drivers/uuidgen"
+	"github.com/lewis97/TechnicalTask/internal/drivers/clock"
 	"github.com/lewis97/TechnicalTask/internal/usecases"
 	"github.com/lewis97/TechnicalTask/internal/usecases/accounts"
 	"github.com/lewis97/TechnicalTask/internal/usecases/transactions"
@@ -42,14 +43,15 @@ func main() {
 	}
 
 	uuidGenerator := uuidgen.NewGoogleUUIDGen()
+	clock := clock.NewTimeClock()
 
 	// Setup & start REST server
 	deps := server.Dependencies{
 		Logger:    *logger,
 		Datastore: ds,
 		Usecases: &usecases.Facade{
-			AccountsUsecase:     accounts.NewAccountsUsecase(uuidGenerator),
-			TransactionsUsecase: transactions.NewAccountsUsecase(uuidGenerator),
+			AccountsUsecase:     accounts.NewAccountsUsecase(uuidGenerator, clock),
+			TransactionsUsecase: transactions.NewTransactionUsecase(uuidGenerator, clock),
 		},
 	}
 	server := server.New(deps)

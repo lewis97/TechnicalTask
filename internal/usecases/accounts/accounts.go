@@ -4,11 +4,12 @@ import (
 	"context"
 	"github.com/google/uuid"
 	"log/slog"
-	"time"
+
 
 	"github.com/lewis97/TechnicalTask/internal/domain/entities"
 	"github.com/lewis97/TechnicalTask/internal/domain/repositories"
 	"github.com/lewis97/TechnicalTask/internal/drivers/uuidgen"
+	"github.com/lewis97/TechnicalTask/internal/drivers/clock"
 )
 
 // Accounts usecase
@@ -16,6 +17,7 @@ import (
 // Passing in a uuid generator to make mocking/UT easier
 type AccountsUsecase struct {
 	uuidGen uuidgen.UUIDGenerator
+	clock clock.Clock
 }
 
 type AccountUsecaseRepos struct {
@@ -23,9 +25,10 @@ type AccountUsecaseRepos struct {
 	AccountsDatastore repositories.Accounts
 }
 
-func NewAccountsUsecase(uuidGenerator uuidgen.UUIDGenerator) *AccountsUsecase {
+func NewAccountsUsecase(uuidGenerator uuidgen.UUIDGenerator, clock clock.Clock) *AccountsUsecase {
 	return &AccountsUsecase{
 		uuidGen: uuidGenerator,
+		clock: clock,
 	}
 }
 
@@ -79,7 +82,7 @@ func (ac *AccountsUsecase) CreateAccount(ctx context.Context, input *CreateAccou
 		return entities.Account{}, err
 	}
 
-	now := time.Now()
+	now := ac.clock.Now()
 
 	newAccount := entities.Account{
 		ID:             id,
