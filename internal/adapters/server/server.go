@@ -49,7 +49,10 @@ func (s Server) Start(addr string, port int) {
 
 func New(deps Dependencies) *Server {
 	router := http.NewServeMux()
-	api := humago.New(router, huma.DefaultConfig("Transaction service REST API", "1.0.0"))
+	apiConfig := huma.DefaultConfig("Transaction service REST API", "1.0.0")
+	// Modify the config to include schema in response
+	apiConfig.CreateHooks = []func (huma.Config) huma.Config {}
+	api := humago.New(router, apiConfig)
 
 	s := &Server{
 		routes:    router,
