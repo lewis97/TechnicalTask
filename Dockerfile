@@ -1,5 +1,9 @@
 FROM golang:alpine3.20 AS base
 
+# ------------------------------------------------------------------------------
+# Development image
+# ------------------------------------------------------------------------------
+
 FROM base AS dev
 
 RUN set -eux; \
@@ -19,3 +23,17 @@ COPY . .
 
 RUN go get -d -v ./...
 
+# ------------------------------------------------------------------------------
+# Application image
+# ------------------------------------------------------------------------------
+
+FROM base AS app
+
+WORKDIR /transactionServer
+
+COPY . .
+
+RUN go mod download
+RUN go build -o dist/ ./cmd/...
+
+CMD ["/dist/transactionServer"]

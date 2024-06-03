@@ -23,7 +23,7 @@ make dev-down
 
 ### Start the server
 
-From within the dev env:
+**From within the dev env:**
 
 To start the server, first build the project using the Make target...
 ```
