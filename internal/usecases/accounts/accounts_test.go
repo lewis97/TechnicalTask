@@ -21,35 +21,36 @@ func Test_CreateAccount_HappyPath(t *testing.T) {
 	ctx := context.Background()
 	docNum := uint(123)
 
-	// Generate new uuid for account
+	// Arrange: generate new uuid for account
 	accountID, err := uuid.NewV7()
 	require.NoError(t, err)
 
-	// mock uuid generation in usecase
+	// Arrange: mock uuid generation in usecase
 	uuidGenMock := uuidMock.NewUUIDGenerator(t)
 	uuidGenMock.EXPECT().New().Once().Return(accountID, nil)
 
-	// mock clock for time.Now() calls
+	// Arrange: mock clock for time.Now() calls
 	createdAt := time.Now()
 	clockMock := clockMock.NewClock(t)
 	clockMock.EXPECT().Now().Once().Return(createdAt)
 
 	accountsUsecase := NewAccountsUsecase(uuidGenMock, clockMock)
 
+	// Arrange: setup logger
 	logAsserter := slogassert.New(t, slog.LevelInfo, nil)
 	testLogger := slog.New(logAsserter)
 
-	// Mock datastore operations
+	// Arrange: mock datastore operations
 	datastoreMock := repoMock.NewAccounts(t)
 
-	// Mock returning account not found error from database so the account can be created
+	// mock returning account not found error from database so the account can be created
 	datastoreMock.
 		EXPECT().
 		GetAccountByDoc(ctx, docNum).
 		Once().
 		Return(&entities.Account{}, entities.NewAccountNotFoundByDocNumError(docNum))
 
-	// Mock create account call to database - return nil (no error)
+	// mock create account call to database - return nil (no error)
 	expectedAccount := entities.Account{
 		ID:             accountID,
 		DocumentNumber: docNum,
@@ -68,6 +69,7 @@ func Test_CreateAccount_HappyPath(t *testing.T) {
 
 	// Act
 	response, err := accountsUsecase.CreateAccount(ctx, &createAccountInput, &accountRepos)
+	
 	// Assert
 	assert.NoError(t, err)
 	assert.Equal(t, expectedAccount, response)

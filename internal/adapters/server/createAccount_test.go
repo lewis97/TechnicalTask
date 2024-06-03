@@ -71,19 +71,21 @@ func Test_CreateAccount(t *testing.T) {
 			// Arrange
 			mockUsecase := mocks.NewUsecase(t)
 
+			// Create server with injected mocks
 			server := New(Dependencies{
 				Logger:    *testLogger,
 				Datastore: &datastore.Datastore{},
 				Usecases:  mockUsecase,
 			})
 
+			// Arrange: setup request
 			request := CreateAccountRequest{
 				Body: CreateAccountRequestBody{
 					DocumentNumber: docNumber,
 				},
 			}
 
-			// Mock the call to the usecases
+			// Arrange: mock the call to the usecases
 			expectedUsecaseInput := &accounts.CreateAccountInput{
 				DocumentNumber: uint(docNumber),
 			}

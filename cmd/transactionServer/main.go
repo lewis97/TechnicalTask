@@ -42,6 +42,7 @@ func main() {
 		log.Fatal("DB Migrations failed: ", err.Error())
 	}
 
+	// Create UUID & time generator dependencies
 	uuidGenerator := uuidgen.NewGoogleUUIDGen()
 	clock := clock.NewTimeClock()
 

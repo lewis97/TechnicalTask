@@ -6,6 +6,9 @@ import (
 	"github.com/lewis97/TechnicalTask/internal/domain/entities"
 )
 
+// These are the REST representation of our domain entities
+// They are used to marshal/unmarshal data between the client and the app
+
 type Account struct {
 	ID             string    `json:"account_id" example:"018ef16a-31a7-7e11-a77d-78b2eea91e2f" doc:"Account ID"`
 	DocumentNumber uint      `json:"document_number" example:"123456789" doc:"Document number for account"`

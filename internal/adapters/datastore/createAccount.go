@@ -6,6 +6,7 @@ import (
 	"github.com/lewis97/TechnicalTask/internal/domain/entities"
 )
 
+// Creates an account in the database, returns nil if successful
 func (ds *Datastore) CreateAccount(ctx context.Context, account entities.Account) error {
 	_, err := ds.db.ExecContext(
 		ctx,

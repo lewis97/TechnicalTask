@@ -6,6 +6,8 @@ import (
 	"github.com/lewis97/TechnicalTask/internal/usecases/accounts"
 )
 
+// This is the REST handler for the POST /accounts endpoint
+
 type CreateAccountRequest struct {
 	Body CreateAccountRequestBody `required:"true"`
 }
@@ -19,7 +21,6 @@ type CreateAccountResponse struct {
 }
 
 func (s *Server) CreateAccount(ctx context.Context, req *CreateAccountRequest) (*CreateAccountResponse, error) {
-
 	// Setup usecase inputs
 	input := &accounts.CreateAccountInput{
 		DocumentNumber: uint(req.Body.DocumentNumber),
@@ -36,6 +37,7 @@ func (s *Server) CreateAccount(ctx context.Context, req *CreateAccountRequest) (
 		return &CreateAccountResponse{}, DomainToRESTError(err)
 	}
 
+	// Return REST representation of response
 	return &CreateAccountResponse{
 		Body: DomainAccountToREST(newAccount),
 	}, nil

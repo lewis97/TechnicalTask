@@ -11,6 +11,9 @@ import (
 	"github.com/lewis97/TechnicalTask/internal/drivers/uuidgen"
 )
 
+// Accounts usecase
+
+// Passing in a uuid generator and clock to make mocking/testing easier
 type TransactionsUsecase struct {
 	uuidGen uuidgen.UUIDGenerator
 	clock   clock.Clock
@@ -37,10 +40,13 @@ type CreateTransactionInput struct {
 	Amount      int
 }
 
+// Validate transaction creation input
 func (input *CreateTransactionInput) Validate() error {
+	// Validate OperationID
 	if !entities.ValidateOperationType(input.OperationID) {
 		return entities.NewInvalidInputError("Invalid operation type id")
 	}
+	// Validate input amount (assuming all amounts should be positive and will then be changed according to the operationID)
 	if input.Amount <= 0 {
 		return entities.NewInvalidInputError("Invalid amount - must be >0")
 	}
@@ -63,6 +69,7 @@ func (tc *TransactionsUsecase) CreateTransaction(ctx context.Context, input *Cre
 			// Account does not exist
 			repo.Logger.Error("Cannot create transaction as account does not exist", "account-id", input.AccountID)
 		} else {
+			// Unexpected error
 			repo.Logger.Error("failed to check for account in datastore when creating transaction", "datastore-err", err.Error())
 		}
 		return entities.Transaction{}, err

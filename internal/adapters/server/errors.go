@@ -5,8 +5,11 @@ import (
 	"github.com/lewis97/TechnicalTask/internal/domain/entities"
 )
 
+// This handles the REST errors we are returning to the client
+
 var UnimplementedErr = huma.Error501NotImplemented("method is not implemented yet")
 
+// Maps a domain error to its REST representation
 func DomainToRESTError(dErr error) huma.StatusError {
 	errMsg := dErr.Error()
 

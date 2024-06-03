@@ -7,6 +7,8 @@ import (
 	"log"
 )
 
+// Establish and return a new database connection
+
 func NewDBConnection(config DatabaseConfig) *sqlx.DB {
 	dsn := fmt.Sprintf(
 		"host=%s user=%s password=%s dbname=%s port=%s",

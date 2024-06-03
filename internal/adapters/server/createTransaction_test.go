@@ -51,7 +51,7 @@ func Test_CreateTransaction(t *testing.T) {
 				},
 			},
 			setMocks: func(mock *mocks.Usecase) {
-				// Mock the call to the usecases
+				// Arrange: mock the call to the usecases
 				expectedUsecaseInput := &transactions.CreateTransactionInput{
 					AccountID:   accountID,
 					OperationID: operationID,
@@ -103,7 +103,7 @@ func Test_CreateTransaction(t *testing.T) {
 	}
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			// Set usecase mock asserts from testcase
+			// Arrange: set usecase mock asserts from testcase
 			mockUsecase := mocks.NewUsecase(t)
 			tc.setMocks(mockUsecase)
 
@@ -112,6 +112,7 @@ func Test_CreateTransaction(t *testing.T) {
 				Datastore: &datastore.Datastore{},
 				Usecases:  mockUsecase,
 			})
+			
 			// Act
 			response, err := server.CreateTransaction(ctx, &tc.request)
 

@@ -5,6 +5,7 @@ import (
 	"log/slog"
 )
 
+// Datastore is used to interact with the database and implements our domain repository operations
 type Datastore struct {
 	db     *sqlx.DB
 	logger slog.Logger

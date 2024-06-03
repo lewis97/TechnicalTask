@@ -8,6 +8,8 @@ import (
 	"github.com/lewis97/TechnicalTask/internal/usecases/transactions"
 )
 
+// This is the REST handler for the POST /transactions endpoint
+
 type CreateTransactionRequest struct {
 	Body CreateTransactionRequestBody
 }
@@ -23,7 +25,7 @@ type CreateTransactionResponse struct {
 }
 
 func (s *Server) CreateTransaction(ctx context.Context, req *CreateTransactionRequest) (*CreateTransactionResponse, error) {
-	// convert account ID to uuid
+	// convert account ID to uuid ready for the usecase
 	accountUUID, err := uuid.Parse(req.Body.AccountID)
 	if err != nil {
 		s.logger.Error("Unable to parse account UUID in request", "account-id", req.Body.AccountID)
@@ -48,7 +50,8 @@ func (s *Server) CreateTransaction(ctx context.Context, req *CreateTransactionRe
 	if err != nil {
 		return &CreateTransactionResponse{}, DomainToRESTError(err)
 	}
-
+	
+	// Return REST representation of response
 	return &CreateTransactionResponse{
 		Body: DomainTransactionToREST(newTransaction),
 	}, nil

@@ -8,6 +8,8 @@ import (
 	"github.com/lewis97/TechnicalTask/internal/usecases/accounts"
 )
 
+// This is the REST handler for the GET /accounts{accountID} endpoint
+
 type GetAccountRequest struct {
 	AccountID string `path:"accountID" example:"018ef16a-31a7-7e11-a77d-78b2eea91e2f" doc:"Account ID"`
 }
@@ -17,7 +19,7 @@ type GetAccountResponse struct {
 }
 
 func (s *Server) GetAccount(ctx context.Context, req *GetAccountRequest) (*GetAccountResponse, error) {
-	// Convert ID to UUID
+	// convert account ID to uuid ready for the usecase
 	accountUUID, err := uuid.Parse(req.AccountID)
 	if err != nil {
 		s.logger.Error("Unable to parse account UUID in request", "account-id", req.AccountID)
@@ -33,12 +35,13 @@ func (s *Server) GetAccount(ctx context.Context, req *GetAccountRequest) (*GetAc
 		AccountsDatastore: s.datastore,
 	}
 
-	// Get account
+	// Get account via usecase
 	account, err := s.usecases.GetAccount(ctx, input, repo)
 	if err != nil {
 		return &GetAccountResponse{}, DomainToRESTError(err)
 	}
 
+	// Return REST representation of response
 	return &GetAccountResponse{
 		Body: DomainAccountToREST(account),
 	}, nil

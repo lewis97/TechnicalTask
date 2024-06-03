@@ -21,6 +21,7 @@ type Usecase interface {
 	CreateTransaction(ctx context.Context, input *transactions.CreateTransactionInput, repo *transactions.TransactionsUsecaseRepos) (entities.Transaction, error)
 }
 
+// Dependencies needed to create a new server
 type Dependencies struct {
 	Logger    slog.Logger
 	Datastore *datastore.Datastore
@@ -34,8 +35,8 @@ type Server struct {
 	usecases  Usecase
 }
 
+// Start the server and listen for requests
 func (s Server) Start(addr string, port int) {
-	// log.Println(fmt.Sprintf("server started. listening on port %d", port))
 	s.logger.Info(
 		"Server started and listening",
 		"address", addr,
@@ -47,11 +48,15 @@ func (s Server) Start(addr string, port int) {
 	}
 }
 
+// Create a new server
 func New(deps Dependencies) *Server {
+	// Set up router and API
 	router := http.NewServeMux()
 	apiConfig := huma.DefaultConfig("Transaction service REST API", "1.0.0")
-	// Modify the config to include schema in response
+
+	// Modify the config to not include schema in response
 	apiConfig.CreateHooks = []func(huma.Config) huma.Config{}
+
 	api := humago.New(router, apiConfig)
 
 	s := &Server{
@@ -62,7 +67,6 @@ func New(deps Dependencies) *Server {
 	}
 
 	// Map routes
-	huma.Get(api, "/hello", s.TestHandler)
 	huma.Get(api, "/accounts/{accountID}", s.GetAccount) // get account by ID
 	huma.Post(api, "/accounts", s.CreateAccount)         // create account
 	huma.Post(api, "/transactions", s.CreateTransaction) // create transaction

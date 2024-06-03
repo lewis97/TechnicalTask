@@ -24,11 +24,12 @@ type Transaction struct {
 	EventDate     time.Time
 }
 
+// Valid operation type is valid (1,2,3,4 only)
 func ValidateOperationType(ot int) bool {
-	// Valid operation types are 1,2,3,4 only
 	return ot > 0 && ot <= 4
 }
 
+// Convert operation type enum to its string representation 
 func (ot OperationType) String() string {
 	switch ot {
 	case UnknownType:

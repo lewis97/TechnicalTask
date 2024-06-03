@@ -14,12 +14,13 @@ import (
 
 // Accounts usecase
 
-// Passing in a uuid generator to make mocking/UT easier
+// Passing in a uuid generator and clock to make mocking/testing easier
 type AccountsUsecase struct {
 	uuidGen uuidgen.UUIDGenerator
 	clock   clock.Clock
 }
 
+// Repos required by the operations in this usecase
 type AccountUsecaseRepos struct {
 	Logger            slog.Logger
 	AccountsDatastore repositories.Accounts
@@ -39,7 +40,9 @@ type GetAcccountInput struct {
 }
 
 func (ac *AccountsUsecase) GetAccount(ctx context.Context, input *GetAcccountInput, repo *AccountUsecaseRepos) (entities.Account, error) {
+	// Get account from datastore
 	account, err := repo.AccountsDatastore.GetAccount(ctx, input.AccountID)
+
 	if err != nil {
 		repo.Logger.Error(
 			"Failed to get account from datastore",
@@ -61,7 +64,7 @@ type CreateAccountInput struct {
 
 // Validate account creation input
 func (input *CreateAccountInput) Validate() error {
-	// No default values
+	// No default values for document number
 	if input.DocumentNumber == 0 {
 		return entities.NewInvalidInputError("Document number must be specified and cannot be 0")
 	}
@@ -76,7 +79,7 @@ func (ac *AccountsUsecase) CreateAccount(ctx context.Context, input *CreateAccou
 	}
 
 	// First check that we don't already have an account with that document number
-	// Expect this to return an AccountNotFound
+	// Expect this to return an AccountNotFound error for the account creation to proceed
 	_, err := repo.AccountsDatastore.GetAccountByDoc(ctx, input.DocumentNumber)
 	if err == nil {
 		// Account already exists with this doc ID
@@ -86,7 +89,7 @@ func (ac *AccountsUsecase) CreateAccount(ctx context.Context, input *CreateAccou
 			input.DocumentNumber)
 		return entities.Account{}, entities.NewAccountAlreadyExistsError(input.DocumentNumber)
 	} else if _, ok := err.(*entities.AccountNotFound); !ok {
-		// Error is not an account not found error, therefore it's a genuine error
+		// Error is not an "account not found error", therefore it's a genuine error
 		repo.Logger.Error("Failed to check for existing account during account creation", "error", err.Error())
 		return entities.Account{}, err
 	}
@@ -98,6 +101,7 @@ func (ac *AccountsUsecase) CreateAccount(ctx context.Context, input *CreateAccou
 		return entities.Account{}, err
 	}
 
+	// create "created_at" time
 	now := ac.clock.Now()
 
 	newAccount := entities.Account{

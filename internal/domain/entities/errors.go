@@ -2,6 +2,8 @@ package entities
 
 import "fmt"
 
+// Define a base error that implements the generic error type
+
 type BaseError struct {
 	error
 	Msg string

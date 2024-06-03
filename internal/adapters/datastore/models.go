@@ -6,7 +6,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/lewis97/TechnicalTask/internal/domain/entities"
 )
-
+// These are datastore representations of our domain entities
 type Account struct {
 	ID             string    `db:"id"`
 	DocumentNumber uint      `db:"document_num"`
@@ -21,6 +21,7 @@ type Transaction struct {
 	EventTime   time.Time `db:"event_time"`
 }
 
+// Convert a database account model to a domain entity
 func AccountModelToDomain(account Account) (*entities.Account, error) {
 	id, err := uuid.Parse(account.ID)
 	if err != nil {
@@ -32,3 +33,5 @@ func AccountModelToDomain(account Account) (*entities.Account, error) {
 		CreatedAt:      account.CreatedAt,
 	}, nil
 }
+
+// TODO: TransactionModelToDomain
