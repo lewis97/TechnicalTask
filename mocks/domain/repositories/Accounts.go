@@ -130,6 +130,65 @@ func (_c *Accounts_GetAccount_Call) RunAndReturn(run func(context.Context, uuid.
 	return _c
 }
 
+// GetAccountByDoc provides a mock function with given fields: ctx, documentNumber
+func (_m *Accounts) GetAccountByDoc(ctx context.Context, documentNumber uint) (*entities.Account, error) {
+	ret := _m.Called(ctx, documentNumber)
+
+	if len(ret) == 0 {
+		panic("no return value specified for GetAccountByDoc")
+	}
+
+	var r0 *entities.Account
+	var r1 error
+	if rf, ok := ret.Get(0).(func(context.Context, uint) (*entities.Account, error)); ok {
+		return rf(ctx, documentNumber)
+	}
+	if rf, ok := ret.Get(0).(func(context.Context, uint) *entities.Account); ok {
+		r0 = rf(ctx, documentNumber)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(*entities.Account)
+		}
+	}
+
+	if rf, ok := ret.Get(1).(func(context.Context, uint) error); ok {
+		r1 = rf(ctx, documentNumber)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
+// Accounts_GetAccountByDoc_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'GetAccountByDoc'
+type Accounts_GetAccountByDoc_Call struct {
+	*mock.Call
+}
+
+// GetAccountByDoc is a helper method to define mock.On call
+//   - ctx context.Context
+//   - documentNumber uint
+func (_e *Accounts_Expecter) GetAccountByDoc(ctx interface{}, documentNumber interface{}) *Accounts_GetAccountByDoc_Call {
+	return &Accounts_GetAccountByDoc_Call{Call: _e.mock.On("GetAccountByDoc", ctx, documentNumber)}
+}
+
+func (_c *Accounts_GetAccountByDoc_Call) Run(run func(ctx context.Context, documentNumber uint)) *Accounts_GetAccountByDoc_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(context.Context), args[1].(uint))
+	})
+	return _c
+}
+
+func (_c *Accounts_GetAccountByDoc_Call) Return(_a0 *entities.Account, _a1 error) *Accounts_GetAccountByDoc_Call {
+	_c.Call.Return(_a0, _a1)
+	return _c
+}
+
+func (_c *Accounts_GetAccountByDoc_Call) RunAndReturn(run func(context.Context, uint) (*entities.Account, error)) *Accounts_GetAccountByDoc_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
 // NewAccounts creates a new instance of Accounts. It also registers a testing interface on the mock and a cleanup function to assert the mocks expectations.
 // The first argument is typically a *testing.T value.
 func NewAccounts(t interface {

@@ -2,14 +2,14 @@ package accounts
 
 import (
 	"context"
-	"github.com/google/uuid"
 	"log/slog"
 
+	"github.com/google/uuid"
 
 	"github.com/lewis97/TechnicalTask/internal/domain/entities"
 	"github.com/lewis97/TechnicalTask/internal/domain/repositories"
-	"github.com/lewis97/TechnicalTask/internal/drivers/uuidgen"
 	"github.com/lewis97/TechnicalTask/internal/drivers/clock"
+	"github.com/lewis97/TechnicalTask/internal/drivers/uuidgen"
 )
 
 // Accounts usecase
@@ -17,7 +17,7 @@ import (
 // Passing in a uuid generator to make mocking/UT easier
 type AccountsUsecase struct {
 	uuidGen uuidgen.UUIDGenerator
-	clock clock.Clock
+	clock   clock.Clock
 }
 
 type AccountUsecaseRepos struct {
@@ -28,7 +28,7 @@ type AccountUsecaseRepos struct {
 func NewAccountsUsecase(uuidGenerator uuidgen.UUIDGenerator, clock clock.Clock) *AccountsUsecase {
 	return &AccountsUsecase{
 		uuidGen: uuidGenerator,
-		clock: clock,
+		clock:   clock,
 	}
 }
 
@@ -73,6 +73,22 @@ func (ac *AccountsUsecase) CreateAccount(ctx context.Context, input *CreateAccou
 	if validationErr := input.Validate(); validationErr != nil {
 		repo.Logger.Error("validation of create account input failed", "validationError", validationErr.Error())
 		return entities.Account{}, validationErr
+	}
+
+	// First check that we don't already have an account with that document number
+	// Expect this to return an AccountNotFound
+	_, err := repo.AccountsDatastore.GetAccountByDoc(ctx, input.DocumentNumber)
+	if err == nil {
+		// Account already exists with this doc ID
+		repo.Logger.Error(
+			"Cannot create account. Account already exists with documentID",
+			"documentID",
+			input.DocumentNumber)
+		return entities.Account{}, entities.NewAccountAlreadyExistsError(input.DocumentNumber)
+	} else if _, ok := err.(*entities.AccountNotFound); !ok {
+		// Error is not an account not found error, therefore it's a genuine error
+		repo.Logger.Error("Failed to check for existing account during account creation", "error", err.Error())
+		return entities.Account{}, err
 	}
 
 	// Create a new id for the account

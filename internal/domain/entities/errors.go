@@ -16,14 +16,31 @@ func (e *BaseError) Error() string {
 type AccountNotFound struct {
 	BaseError
 }
+type AccountAlreadyExists struct {
+	BaseError
+}
 
 type InvalidInputError struct {
 	BaseError
 }
 
-func NewAccountNotFoundError(accountID string) *AccountNotFound {
+func NewAccountNotFoundByIDError(accountID string) *AccountNotFound {
 	msg := fmt.Sprintf("No account with ID %s found", accountID)
 	return &AccountNotFound{
+		BaseError{Msg: msg},
+	}
+}
+
+func NewAccountNotFoundByDocNumError(docNum uint) *AccountNotFound {
+	msg := fmt.Sprintf("No account with document number %d found", docNum)
+	return &AccountNotFound{
+		BaseError{Msg: msg},
+	}
+}
+
+func NewAccountAlreadyExistsError(docNum uint) *AccountAlreadyExists {
+	msg := fmt.Sprintf("Account already exists with document number %d", docNum)
+	return &AccountAlreadyExists{
 		BaseError{Msg: msg},
 	}
 }

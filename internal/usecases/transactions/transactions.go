@@ -13,7 +13,7 @@ import (
 
 type TransactionsUsecase struct {
 	uuidGen uuidgen.UUIDGenerator
-	clock clock.Clock
+	clock   clock.Clock
 }
 
 type TransactionsUsecaseRepos struct {
@@ -25,7 +25,7 @@ type TransactionsUsecaseRepos struct {
 func NewTransactionUsecase(uuidGenerator uuidgen.UUIDGenerator, clock clock.Clock) *TransactionsUsecase {
 	return &TransactionsUsecase{
 		uuidGen: uuidGenerator,
-		clock: clock,
+		clock:   clock,
 	}
 }
 

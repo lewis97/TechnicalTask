@@ -2,6 +2,7 @@ package repositories
 
 import (
 	"context"
+
 	"github.com/google/uuid"
 	"github.com/lewis97/TechnicalTask/internal/domain/entities"
 )
@@ -10,6 +11,7 @@ import (
 type Accounts interface {
 	CreateAccount(ctx context.Context, account entities.Account) error
 	GetAccount(ctx context.Context, accountID uuid.UUID) (*entities.Account, error)
+	GetAccountByDoc(ctx context.Context, documentNumber uint) (*entities.Account, error)
 }
 
 type Transactions interface {

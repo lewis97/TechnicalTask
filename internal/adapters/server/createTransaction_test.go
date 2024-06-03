@@ -37,7 +37,7 @@ func Test_CreateTransaction(t *testing.T) {
 	testCases := []struct {
 		name             string
 		request          CreateTransactionRequest
-		setMocks	func(mock *mocks.Usecase) 
+		setMocks         func(mock *mocks.Usecase)
 		expectedResponse *CreateTransactionResponse
 		expectedError    error
 	}{
@@ -91,14 +91,14 @@ func Test_CreateTransaction(t *testing.T) {
 			name: "invalid uuid in request",
 			request: CreateTransactionRequest{
 				Body: CreateTransactionRequestBody{
-					AccountID: "invalid-id",
+					AccountID:     "invalid-id",
 					OperationType: operationID,
-					Amount: amount,
+					Amount:        amount,
 				},
 			},
-			setMocks: func(mock *mocks.Usecase) {},
+			setMocks:         func(mock *mocks.Usecase) {},
 			expectedResponse: &CreateTransactionResponse{},
-			expectedError: huma.Error400BadRequest("Invalid account id"),
+			expectedError:    huma.Error400BadRequest("Invalid account id"),
 		},
 	}
 	for _, tc := range testCases {
@@ -122,5 +122,3 @@ func Test_CreateTransaction(t *testing.T) {
 	}
 
 }
-
-

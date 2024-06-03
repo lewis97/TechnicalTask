@@ -16,10 +16,10 @@ import (
 	"github.com/thejerf/slogassert"
 )
 
-func Test_CreateAccount_HappyPath(t *testing.T){
+func Test_CreateAccount_HappyPath(t *testing.T) {
 	// Arrange
 	ctx := context.Background()
-	docNum := 123
+	docNum := uint(123)
 
 	// Generate new uuid for account
 	accountID, err := uuid.NewV7()
@@ -39,22 +39,31 @@ func Test_CreateAccount_HappyPath(t *testing.T){
 	logAsserter := slogassert.New(t, slog.LevelInfo, nil)
 	testLogger := slog.New(logAsserter)
 
-	// Mock datastore create account
+	// Mock datastore operations
 	datastoreMock := repoMock.NewAccounts(t)
+
+	// Mock returning account not found error from database so the account can be created
+	datastoreMock.
+		EXPECT().
+		GetAccountByDoc(ctx, docNum).
+		Once().
+		Return(&entities.Account{}, entities.NewAccountNotFoundByDocNumError(docNum))
+
+	// Mock create account call to database - return nil (no error)
 	expectedAccount := entities.Account{
 		ID:             accountID,
-		DocumentNumber: uint(docNum),
+		DocumentNumber: docNum,
 		CreatedAt:      createdAt,
 	}
 	datastoreMock.EXPECT().CreateAccount(ctx, expectedAccount).Once().Return(nil)
 
 	accountRepos := AccountUsecaseRepos{
-		Logger: *testLogger,
+		Logger:            *testLogger,
 		AccountsDatastore: datastoreMock,
 	}
 
 	createAccountInput := CreateAccountInput{
-		DocumentNumber: uint(docNum),
+		DocumentNumber: docNum,
 	}
 
 	// Act
